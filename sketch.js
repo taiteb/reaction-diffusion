@@ -20,53 +20,16 @@ function setup() {
     }
   }
 
-  for (let i = 59; i < 239; i++){
-    for (let j = 59; j < 239; j++){
-      grid[i][j].b = 1;
+  for (let i = 0; i < 75; i++){
+    for (let j = 100; j < 125; j++){
+      noiseX = floor(noise(i) * width);
+      noiseY = floor(noise(j) * height);
+      grid[noiseX][noiseY].b = 1;
+      grid[noiseY][noiseX].b = 1;
     }  
   }
 
-  for (let i = 559; i < 739; i++){
-    for (let j = 559; j < 739; j++){
-      grid[i][j].b = 1;
-    }  
-  }
-
-  for (let i = 559; i < 739; i++){
-    for (let j = 59; j < 239; j++){
-      grid[i][j].b = 1;
-    }  
-  }
-
-  for (let i = 59; i < 239; i++){
-    for (let j = 559; j < 739; j++){
-      grid[i][j].b = 1;
-    }  
-  }
-
-  for (let i = 149; i < 649; i++){
-    for (let j = 149; j < 649; j++){
-      grid[i][j].b = 1;
-    }  
-  }
-
-  for (let i = 200; i < 600; i++){
-    for (let j = 200; j < 600; j++){
-      grid[i][j].b = 0;
-    }  
-  }
-
-  for (let i = 300; i < 500; i++){
-    for (let j = 300; j < 500; j++){
-      grid[i][j].b = 1;
-    }  
-  }
-
-  for (let i = 350; i < 450; i++){
-    for (let j = 350; j < 450; j++){
-      grid[i][j].b = 0;
-    }  
-  }
+  
 
   grid[100][100].b = 1;
 }
@@ -86,8 +49,8 @@ function draw() {
   for (let x = 0; x < width; x++) {
     for (let y = 0; y < height; y++) {
       let pix = (x + y * width) * 4;
-      pixels[pix + 0] = 25;
-      pixels[pix + 1] = grid[x][y].a*255;
+      pixels[pix + 0] = grid[x][y].a*255;
+      pixels[pix + 1] = 25;
       pixels[pix + 2] = grid[x][y].b*150;
       pixels[pix + 3] = 255;
     }
@@ -95,6 +58,8 @@ function draw() {
   updatePixels();
 
   swap();
+
+  
 }
 
 function swap() {
@@ -131,4 +96,8 @@ function laplaceB(x,y){
   sumB += grid[x-1][y+1].b * 0.05;
 
   return sumB;
+}
+
+function mouseClicked() {
+  saveCanvas(`photo ${frameCount}`, 'png');
 }
